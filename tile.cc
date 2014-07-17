@@ -1,7 +1,7 @@
 #include "tile.h"
 
-tile::tile () : occupied(false) {
-}
+
+tile::tile () : occupied(false) {}
 
 void tile::toggleOccupied () {
 	if (this->occupied) {this->occupied = false;}
