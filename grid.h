@@ -2,6 +2,7 @@
 #define __grid_H__
 #include "tile.h"
 #include "plant.h"
+#include "genepack.h"
 
 class grid {
 	
@@ -12,6 +13,7 @@ class grid {
 		plant ***plants;
 		
 		int width, height, numPlants;	
+		int totalLife, totalNum, totalSpread, totalChance;
 		
 	public:	
 	
@@ -31,7 +33,7 @@ class grid {
 		
 		// creates a plant object with the given characteristics, at the
 		// given location, and occupies the corresponding tile
-		void addPlant (int lifeTime, int numSeeds, int seedSpread, int germChance, int x, int y);
+		void addPlant (genePack *gp, int x, int y);
 		
 		// deletes a plant object at the given location and de-occupies
 		// the tile

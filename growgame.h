@@ -3,4 +3,7 @@
 #include "tile.h"
 #include "plant.h"
 #include "grid.h"
+#include "randmath.h"
+#include "seeddrop.h"
+#include "genepack.h"
 #endif

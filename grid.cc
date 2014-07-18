@@ -1,4 +1,6 @@
 #include "grid.h"
+#include "seeddrop.h" 
+#include "genepack.h"
 #include <iostream>
 
 
@@ -12,71 +14,74 @@ grid *grid::getInstance (int x, int y) {
 	return instance;
 	
 }
-grid::grid (int width, int height) : width(width), height(height), numPlants(0) {
+grid::grid (int width, int height) : width(width), height(height), numPlants(0), totalLife(0), totalNum(0), totalSpread(0), totalChance(0) {
 	
-	tile ***tiles = new tile**[width];
-	plant ***plants = new plant**[width];
+	this->tiles = new tile**[width];
+	this->plants = new plant**[width];
 	
 	for(int i = 0; i < width; ++i) {
 		
-		tiles[i] = new tile*[height];
-		plants[i] = new plant*[height];
+		this->tiles[i] = new tile*[height];
+		this->plants[i] = new plant*[height];
 		
 		for(int j = 0; j < height; j++) {
 			
-			tiles[i][j] = new tile();
-			plants[i][j] = NULL;
+			this->tiles[i][j] = new tile();
+			this->plants[i][j] = NULL;
 			
 		}
 	}
-	
-	this->tiles = tiles;
-	this->plants = plants;
-
 }
 
 grid::~grid () {
 	
 	for(int i = 0; i < width; ++i) {
 		for(int j = 0; j < height; j++) {
-			
-			delete tiles[i][j];
-			tiles[i][j] = NULL;
-			delete plants[i][j];
-			plants[i][j] = NULL;
+			delete this->tiles[i][j];
+			this->tiles[i][j] = NULL;
+			delete this->plants[i][j];
+			this->plants[i][j] = NULL;
 			
 		}
 		
-		delete [] tiles[i];
-		tiles[i] = NULL;
-		delete [] plants[i];
-		plants[i] = NULL;
+		delete [] this->tiles[i];
+		this->tiles[i] = NULL;
+		delete [] this->plants[i];
+		this->plants[i] = NULL;
 		
 	}
 	
-	delete [] tiles;
-	tiles = NULL;
-	delete [] plants;
-	plants = NULL;
+	delete [] this->tiles;
+	this->tiles = NULL;
+	delete [] this->plants;
+	this->plants = NULL;
 	
 }
 
-void grid::addPlant (int lifeTime, int numSeeds, int seedSpread, int germChance, int x, int y) {
+void grid::addPlant (genePack *gp, int x, int y) {
 	
 	if(x >= 0 && y >= 0 && x < width && y < height && !plants[x][y]) {
-		plants[x][y] = new plant(lifeTime, numSeeds, seedSpread, germChance);
+		plants[x][y] = new plant(gp->mutate());
+		totalLife += plants[x][y]->getGenePack()->getLifeTime();
+		totalNum += plants[x][y]->getGenePack()->getNumSeeds();
+		totalSpread += plants[x][y]->getGenePack()->getSeedSpread();
+		totalChance += plants[x][y]->getGenePack()->getGermChance();
 		tiles[x][y]->toggleOccupied();
-		numPlants++;
+		this->numPlants++;
 	}
 	
 }
 
 void grid::removePlant (int x, int y) {
 	
+	totalLife -= plants[x][y]->getGenePack()->getLifeTime();
+	totalNum -= plants[x][y]->getGenePack()->getNumSeeds();
+	totalSpread -= plants[x][y]->getGenePack()->getSeedSpread();
+	totalChance -= plants[x][y]->getGenePack()->getGermChance();
 	delete plants[x][y];
 	plants[x][y] = NULL;
 	tiles[x][y]->toggleOccupied();
-	numPlants--;
+	this->numPlants--;
 	
 }
 
@@ -84,12 +89,21 @@ void grid::tick (){
 	
 	for(int i = 0; i < width; ++i) {
 		for(int j = 0; j < height; j++) {
-			if(plants[i][j] && !plants[i][j]->isJustCreated() && plants[i][j]->incrementAge() >= plants[i][j]->getLifeTime()) {
-				this->addPlant(plants[i][j]->getLifeTime(), plants[i][j]->getNumSeeds(), plants[i][j]->getSeedSpread(), plants[i][j]->getGermChance(), i + 1, j);
-				this->addPlant(plants[i][j]->getLifeTime(), plants[i][j]->getNumSeeds(), plants[i][j]->getSeedSpread(), plants[i][j]->getGermChance(), i - 1, j);
-				this->addPlant(plants[i][j]->getLifeTime(), plants[i][j]->getNumSeeds(), plants[i][j]->getSeedSpread(), plants[i][j]->getGermChance(), i, j - 1);
-				this->addPlant(plants[i][j]->getLifeTime(), plants[i][j]->getNumSeeds(), plants[i][j]->getSeedSpread(), plants[i][j]->getGermChance(), i, j + 1);
+			if(plants[i][j] && !plants[i][j]->isJustCreated() && plants[i][j]->incrementAge() >= plants[i][j]->getGenePack()->getLifeTime()) {
+				seedDrop **seeds = plants[i][j]->spewSeeds();
+				bool sameSpace = false;
+				genePack *gp = new genePack(plants[i][j]->getGenePack()->getLifeTime(),plants[i][j]->getGenePack()->getNumSeeds(),plants[i][j]->getGenePack()->getSeedSpread(),plants[i][j]->getGenePack()->getGermChance());
+				for(int k = 0; k < gp->getNumSeeds(); k++) {
+					if(seeds[k]){
+						if(seeds[k]->getX() == 0 && seeds[k]->getY() == 0) {sameSpace = true;}
+						this->addPlant(gp, i + seeds[k]->getX(), j + seeds[k]->getY());
+					}
+					delete seeds[k];
+				}
+				delete [] seeds;
 				this->removePlant(i, j);
+				if(sameSpace)this->addPlant(gp,i,j);
+				delete gp;
 			}
 		}
 	}
@@ -105,15 +119,14 @@ void grid::tick (){
 
 void grid::listPlants (){
 	
-	std::cout << "Number of plants: " << numPlants << std::endl;
-	for(int i = 0; i < width; ++i) {
+	/*for(int i = 0; i < width; ++i) {
 		for(int j = 0; j < height; j++) {
 			if(plants[i][j]) {
-				std::cout << "---------------------------------------" << std::endl;
+				std::cout << "--------------------------------------------------------------" << std::endl;
 				plants[i][j]->printPlant();
 			}
 		}
-	}
+	}*/
 	for(int i = 0; i < width; ++i) {
 		for(int j = 0; j < height; j++) {
 			if(plants[i][j]) {
@@ -124,5 +137,10 @@ void grid::listPlants (){
 		}
 		std::cout << std::endl;
 	}
+	std::cout << "Number of plants: " << numPlants << std::endl;
+	std::cout << "Average life time: " << (float)totalLife / (float)numPlants << std::endl;
+	std::cout << "Average number of seeds: " << (float)totalNum / (float)numPlants << std::endl;
+	std::cout << "Average spread distance: " << (float)totalSpread / (float)numPlants << std::endl;
+	std::cout << "Average germination chance: " << (float)totalChance / (float)numPlants << std::endl;
 	
 }

@@ -1,23 +1,22 @@
 #include "plant.h"
+#include "seeddrop.h"
+#include "randmath.h"
+#include "genepack.h"
 #include <iostream>
 
 
-plant::plant (int lifeTime, int numSeeds, int seedSpread, int germChance) : lifeTime(lifeTime), numSeeds(numSeeds), seedSpread(seedSpread), germChance(germChance) {
+plant::plant (genePack *gp) : gp(gp) {
 	this->age = 0;
 	this->justCreated = true;
 }
+
+plant::~plant () {delete gp;}
 
 int plant::incrementAge () {
 	return ++this->age;
 }
 
-int plant::getLifeTime () {return this->lifeTime;}
-
-int plant::getNumSeeds () {return this->numSeeds;}
-
-int plant::getSeedSpread () {return this->seedSpread;}
-
-int plant::getGermChance () {return this->germChance;}	
+genePack *plant::getGenePack () {return this->gp;}
 
 int plant::getAge () {return this->age;}
 
@@ -26,5 +25,17 @@ bool plant::isJustCreated () {return this->justCreated;}
 void plant::notJustCreated () {this->justCreated = false;}
 
 void plant::printPlant () {
-	std::cout << "lifeTime: " << this->lifeTime << " | numSeeds: " << this->numSeeds << " | seedSpread: " << this->seedSpread << " | germChance: " << this->germChance << " | age: " << this->age << std::endl;
+	std::cout << "lifeTime: " << this->gp->getLifeTime() << " | numSeeds: " << this->gp->getNumSeeds() << " | seedSpread: " << this->gp->getSeedSpread() << " | germChance: " << this->gp->getGermChance() << " | age: " << this->age << std::endl;
+}
+
+seedDrop **plant::spewSeeds () {
+	seedDrop **seeds = new seedDrop*[this->gp->getNumSeeds()];
+	for(int i = 0; i < this->gp->getNumSeeds(); ++i) {
+		if (randMath::getRand(0,100) > this->gp->getGermChance()) {
+			seeds[i] = NULL;
+		} else {
+			seeds[i] = randMath::getDrop(this->gp->getSeedSpread());
+		}
+	}
+	return seeds;
 }

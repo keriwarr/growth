@@ -3,13 +3,21 @@
 
 
 int main () {
-		
-	grid *theGrid = grid::getInstance(25,25);
-	theGrid->addPlant(3,4,2,1,4,4);
-	theGrid->listPlants();
-	for(int i = 0; i < 25; i ++) {
-		theGrid->tick();
+	
+	randMath::seedRand();
+	grid *theGrid = grid::getInstance(13,13);
+	theGrid->addPlant(new genePack(5,3,4,50),6,6);
+	theGrid->tick();
+	char c;
+	std::cout << "Repeatedly enter any character but 'q' to iterate" << std::endl;
+	std::cin >> c;
+	int iter = 0;
+	while(c != 'q'){
 		theGrid->listPlants();
+		std::cout << "Iterations: " << iter << std::endl;
+		std::cin >> c; 
+		theGrid->tick();
+		iter++;
 	}
 	delete theGrid;
 
