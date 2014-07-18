@@ -1,0 +1,8 @@
+#!/bin/bash
+if [ ${#} -ne 2 ]; then
+ echo "Usage: ./generateData (int>=1)" 
+fi
+echo "c" | ./main ${1} > data.csv
+libreoffice --calc -o data.csv
+rm data.csv
+

@@ -8,12 +8,14 @@ grid *grid::instance = 0;
 
 grid *grid::getInstance (int x, int y) {
 	
+	
 	if (!instance) {
 		instance = new grid(x, y);
 	}
 	return instance;
 	
 }
+
 grid::grid (int width, int height) : width(width), height(height), numPlants(0), totalLife(0), totalNum(0), totalSpread(0), totalChance(0) {
 	
 	this->tiles = new tile**[width];
@@ -143,4 +145,8 @@ void grid::listPlants (){
 	std::cout << "Average spread distance: " << (float)totalSpread / (float)numPlants << std::endl;
 	std::cout << "Average germination chance: " << (float)totalChance / (float)numPlants << std::endl;
 	
+}
+
+void grid::printCSV () {
+	std::cout << (float)totalLife / (float)numPlants << "," << (float)totalNum / (float)numPlants << "," << (float)totalSpread / (float)numPlants << "," << (float)totalChance / (float)numPlants << "," << std::endl;
 }

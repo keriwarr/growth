@@ -47,6 +47,10 @@ class grid {
 		// prints out each plant currently on the grid and as well as a 
 		// simple graphical representation of the grid
 		void listPlants ();		
+		
+		// prints the current averages of all of the stats for all the 
+		// plants currently on the grid, separated by commas
+		void printCSV ();
 	
 };
 
