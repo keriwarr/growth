@@ -9,13 +9,13 @@ class tile {
 	public:
 	
 		// defaults occupied to false
-		tile ();
+		tile();
 		
 		// negates the value of occupied
-		void toggleOccupied ();
+		void toggleOccupied();
 		
 		// returns the value of occupied
-		int getOccupied () const;
+		int getOccupied() const;
 
 };
 

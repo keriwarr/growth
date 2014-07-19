@@ -1,5 +1,6 @@
 #ifndef __GENEPACK_H__
 #define __GENEPACK_H__
+#include "randmath.h"
 
 class genePack {
 
@@ -8,27 +9,27 @@ class genePack {
 		//		-the number of seeds the plant will produce
 		// 		-the distance which the seeds can spread
 		//		-the chance that a seed will form a new plant
-		int lifeTime, numSeeds, seedSpread, germChance;
+		float lifeTime, numSeeds, seedSpread, germChance;
 
 	public:
 	
 		// initializes using the given values
-		genePack (int lifeTime, int numSeeds, int seedSpread, int germChance);
+		genePack(float lifeTime, float numSeeds, float seedSpread, float germChance);
 			
 		// returns lifeTime
-		int getLifeTime ();
+		float getLifeTime();
 		
 		// returns numSeeds
-		int getNumSeeds ();
+		float getNumSeeds();
 		
 		// returns seedSpread
-		int getSeedSpread ();
+		float getSeedSpread();
 		
 		// returns germChance
-		int getGermChance ();
+		float getGermChance();
 	
 		// returns a new genePack which much be deleted by the caller
-		genePack *mutate ();
+		genePack *mutate();
 		
 };
 

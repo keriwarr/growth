@@ -9,13 +9,13 @@ class seedDrop {
 	
 	public:
 	
-		seedDrop (int x, int y);
+		seedDrop(int x, int y);
 		
 		// returns x
-		int getX ();
+		int getX();
 		
 		// returns y
-		int getY ();
+		int getY();
 	
 };
 

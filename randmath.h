@@ -1,22 +1,26 @@
 #ifndef __RANDMATH_H__
 #define __RANDMATH_H__
 #include "seeddrop.h"
+#include <ctime>
+#include <cstdlib>
+#include <cmath>
+
 
 class randMath {
 
 	public:
 
-	// calls srand(time(NULL))
-	static void seedRand ();
+		// calls srand(time(NULL)); prevents multiple seedings
+		static void seedRand();
 
-	// generates an integer in between bot and top, inclusive
-	static int getRand (int bot, int top);
+		// generates an integer in between bot and top, inclusive
+		static int getRand(int bot, int top);
 
-	// returns a seedDrop object with x & y within radius:range of the 
-	// origin plant
-	//
-	// Note!! caller must delete returned seedDrop
-	static seedDrop *getDrop (int range);
+		// returns a seedDrop object with x & y within radius:range of the 
+		// origin plant
+		//
+		// Note!! caller must delete returned seedDrop
+		static seedDrop *getDrop(float range);
 	
 };
 

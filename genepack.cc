@@ -1,25 +1,30 @@
 #include "genepack.h"
-#include "randmath.h"
 
-genePack::genePack (int lifeTime, int numSeeds, int seedSpread, int germChance) : lifeTime(lifeTime), numSeeds(numSeeds), seedSpread(seedSpread), germChance(germChance) {}
+genePack::genePack(float lifeTime, float numSeeds, float seedSpread, float germChance) : lifeTime(lifeTime), numSeeds(numSeeds), seedSpread(seedSpread), germChance(germChance) {}
 
-int genePack::getLifeTime () {return this->lifeTime;}
+float genePack::getLifeTime() {return this->lifeTime;}
 
-int genePack::getNumSeeds () {return this->numSeeds;}
+float genePack::getNumSeeds() {return this->numSeeds;}
 
-int genePack::getSeedSpread () {return this->seedSpread;}
+float genePack::getSeedSpread() {return this->seedSpread;}
 
-int genePack::getGermChance () {return this->germChance;}
+float genePack::getGermChance() {return this->germChance;}
 
-genePack *genePack::mutate () {
-	int newLifeTime = this->lifeTime + randMath::getRand(-1,1);
-	if(newLifeTime <= 0) newLifeTime = 1;
-	int newNumSeeds = this->numSeeds + randMath::getRand(-1,1);
-	if(newNumSeeds < 0) newNumSeeds = 0;
-	int newSeedSpread = this->seedSpread + randMath::getRand(-1,1);
-	if(newSeedSpread < 0) newSeedSpread = 0;
-	int newGermChance = this->germChance + randMath::getRand(-5,5);
-	if(newGermChance < 0) newGermChance = 0;
-	else if(newGermChance > 100) newGermChance = 100;
+genePack *genePack::mutate() {
+	
+	float newLifeTime = this->lifeTime + (float)(randMath::getRand(-50,50))/100.0;
+	if(newLifeTime < 1.0) newLifeTime = 1.0;
+	
+	float newNumSeeds = this->numSeeds + (float)(randMath::getRand(-50,50))/100.0;
+	if(newNumSeeds < 0.0) newNumSeeds = 0.0;
+	
+	float newSeedSpread = this->seedSpread + (float)(randMath::getRand(-50,50))/100.0;
+	if(newSeedSpread < 0.0) newSeedSpread = 0.0;
+	
+	float newGermChance = this->germChance + (float)(randMath::getRand(-250,250))/100.0;
+	if(newGermChance < 0.0) newGermChance = 0.0;
+	else if(newGermChance > 100.0) newGermChance = 100.0;
+	
 	return new genePack(newLifeTime,newNumSeeds,newSeedSpread,newGermChance);
+	
 }

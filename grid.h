@@ -3,6 +3,8 @@
 #include "tile.h"
 #include "plant.h"
 #include "genepack.h"
+#include "seeddrop.h" 
+#include <iostream>
 
 class grid {
 	
@@ -13,7 +15,9 @@ class grid {
 		plant ***plants;
 		
 		int width, height, numPlants;	
-		int totalLife, totalNum, totalSpread, totalChance;
+		
+		// sum of characteristics of all plants on the grid
+		float totalLife, totalNum, totalSpread, totalChance;
 		
 	public:	
 	
@@ -31,9 +35,9 @@ class grid {
 		// destructs the grid as well as the arrays of pointers
 		~grid();
 		
-		// creates a plant object with the given characteristics, at the
+		// creates a plant object with the given gene pack, at the
 		// given location, and occupies the corresponding tile
-		void addPlant (genePack *gp, int x, int y);
+		void addPlant (genePack *gp, int ID, int x, int y);
 		
 		// deletes a plant object at the given location and de-occupies
 		// the tile
@@ -44,9 +48,10 @@ class grid {
 		// plants
 		void tick ();
 		
-		// prints out each plant currently on the grid and as well as a 
-		// simple graphical representation of the grid
-		void listPlants ();		
+		// if (individuals) prints stats for each plant on the grid
+		// if (wholeGrid) prints a ASCII representation of the grid
+		// if (averageStats) prints average stats of all the plants
+		void listPlants (bool individuals, bool wholeGrid, bool averageStats);		
 		
 		// prints the current averages of all of the stats for all the 
 		// plants currently on the grid, separated by commas
