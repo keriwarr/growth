@@ -4,12 +4,12 @@
 
 int main(int argc, char *argv[]) {
 	
-	int gridX = 21;
-	int gridY = 21;
-	float life = 3;
+	int gridX = 10;
+	int gridY = 10;
+	float life = 20;
 	float num = 4;
 	float spread = 2;
-	float chance = 50;
+	float chance = 70;
 	char c;
 	
 	int CSV_ITERATIONS = 1000;
@@ -26,13 +26,14 @@ int main(int argc, char *argv[]) {
 		std::cin >> spread;
 		std::cout << "Enter starting seed germination chance (float[0-100]): ";
 		std::cin >> chance;
-		std::cout << "Repeatedly enter any character but 'q' to iterate, or enter 'c' for .csv mode" << std::endl;
+		std::cout << "Repeatedly enter any character but 'q' to iterate, enter 't' to iterate 10 times, enter 'h' to iterate 100 times, or enter 'c' for .csv mode" << std::endl;
 		std::cin >> c;
-		
+			
 	}
 	
 	randMath::seedRand();
 	grid *theGrid = grid::getInstance(gridX,gridY);
+	genePack::setMutationFactors(20,2,2,2,10);
 	theGrid->addPlant(new genePack(life,num,spread,chance),1,gridX/2,gridY/2);
 	/*theGrid->addPlant(new genePack(life,num,spread,chance),2,3*gridX/4,3*gridY/4);*/
 	theGrid->tick();
@@ -41,7 +42,7 @@ int main(int argc, char *argv[]) {
 		
 		for(int i = 0; i < CSV_ITERATIONS; i++) {
 			
-			theGrid->printCSV();
+			if(i%5000==0)theGrid->printCSV();
 			theGrid->tick();
 			
 		}
@@ -54,8 +55,20 @@ int main(int argc, char *argv[]) {
 			theGrid->listPlants(0,1,1);
 			std::cout << "Iterations: " << iter << std::endl;
 			std::cin >> c; 
-			theGrid->tick();
-			iter++;
+			if(c == 't') {
+				for(int i = 0; i < 10; i++) {
+					theGrid->tick();
+				}
+				iter += 10;
+			} else if(c == 'h') {
+				for(int i = 0; i < 100; i++) {
+					theGrid->tick();
+				}			
+				iter += 100;	
+			} else {
+				theGrid->tick();
+				iter++;
+			}
 			
 		}
 	}
