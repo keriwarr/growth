@@ -31,9 +31,9 @@ void plant::printPlant() {
 	
 }
 
-seedDrop **plant::spewSeeds(float crowdedness) {
+vector **plant::spewSeeds(float crowdedness) {
 		
-	seedDrop **seeds = new seedDrop*[(int)this->gp->getNumSeeds()];
+	vector **seeds = new vector*[(int)this->gp->getNumSeeds()];
 	
 	for(int i = 0; i < (int)this->gp->getNumSeeds(); ++i) {
 		

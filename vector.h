@@ -1,7 +1,7 @@
-#ifndef __SEEDDROP_H__
-#define __SEEDDROP_H__
+#ifndef __VECTOR_H__
+#define __VECTOR_H__
 
-class seedDrop {
+class vector {
 	
 		// co-ordinates for where a new seed drops relative to its 
 		// parent plant
@@ -9,7 +9,7 @@ class seedDrop {
 	
 	public:
 	
-		seedDrop(int x, int y);
+		vector(int x, int y);
 		
 		// returns x
 		int getX();

@@ -19,12 +19,12 @@ int randMath::getRand(int bot, int top) {
 	
 }
 
-seedDrop *randMath::getDrop(float range) {
+vector *randMath::getDrop(float range) {
 	
 	float rad = (range + 1/2) / 100.0 * getRand(0,100);
 	float angle = getRand(0,360) / 180.0 * M_PI;
 	
-	seedDrop *seeddrop = new seedDrop((int) round(cos(angle) * rad),(int) round(sin(angle) * rad));
-	return seeddrop;
+	vector *vect = new vector((int) round(cos(angle) * rad),(int) round(sin(angle) * rad));
+	return vect;
 	
 }

@@ -116,7 +116,7 @@ void grid::tick() {
 				
 				crowdedness *= 5.0/2.0;
 				
-				seedDrop **seeds = plants[i][j]->spewSeeds(crowdedness);
+				vector **seeds = plants[i][j]->spewSeeds(crowdedness);
 				genePack *gp = new genePack(plants[i][j]->getGenePack()->getLifeTime(),plants[i][j]->getGenePack()->getNumSeeds(),plants[i][j]->getGenePack()->getSeedSpread(),plants[i][j]->getGenePack()->getGermChance());
 				int ID = plants[i][j]->getID();
 				bool sameSpace = false;

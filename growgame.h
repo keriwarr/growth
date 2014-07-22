@@ -4,6 +4,6 @@
 #include "plant.h"
 #include "grid.h"
 #include "randmath.h"
-#include "seeddrop.h"
+#include "vector.h"
 #include "genepack.h"
 #endif

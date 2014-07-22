@@ -1,6 +1,6 @@
 #ifndef __PLANT_H__
 #define __PLANT_H__
-#include "seeddrop.h"
+#include "vector.h"
 #include "genepack.h"
 #include "randmath.h"
 #include <iostream>
@@ -59,7 +59,7 @@ class plant {
 		// a seed germinating approaches zero
 		//
 		// Note!! caller must delete the returned array
-		seedDrop **spewSeeds(float crowdedness);
+		vector **spewSeeds(float crowdedness);
 		
 };
 

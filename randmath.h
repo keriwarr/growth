@@ -1,6 +1,6 @@
 #ifndef __RANDMATH_H__
 #define __RANDMATH_H__
-#include "seeddrop.h"
+#include "vector.h"
 #include <ctime>
 #include <cstdlib>
 #include <cmath>
@@ -20,7 +20,7 @@ class randMath {
 		// origin plant
 		//
 		// Note!! caller must delete returned seedDrop
-		static seedDrop *getDrop(float range);
+		static vector *getDrop(float range);
 	
 };
 

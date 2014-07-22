@@ -1,7 +1,7 @@
 CXX=g++
 XXFLAGS=-Wall -MMD
 EXEC=main
-OBJECTS=main.o tile.o plant.o grid.o randmath.o seeddrop.o genepack.o
+OBJECTS=main.o tile.o plant.o grid.o randmath.o vector.o genepack.o
 DEPENDS=${OBJECTS:.o=.d}
 
 ${EXEC}: ${OBJECTS}
