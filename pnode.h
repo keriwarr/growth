@@ -13,8 +13,6 @@ class pnode {
 	
 		pnode(plant *p, int x, int y, pnode* next);
 		
-		~pnode();
-		
 		plant *getPlant();
 		
 		int getX() const;

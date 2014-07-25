@@ -1,7 +1,7 @@
 CXX=g++
 XXFLAGS=-Wall -MMD
 EXEC=main
-OBJECTS=main.o plant.o grid.o randmath.o vector.o genepack.o pnode.o canopy.o 
+OBJECTS=main.o grid.o plant.o randmath.o vector.o genepack.o pnode.o canopy.o 
 DEPENDS=${OBJECTS:.o=.d}
 
 ${EXEC}: ${OBJECTS}
@@ -9,4 +9,4 @@ ${EXEC}: ${OBJECTS}
 -include ${DEPENDS}
 
 clean:
-	rm ${OBJECTS} ${EXEC}
+	rm ${OBJECTS}

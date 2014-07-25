@@ -55,7 +55,7 @@ genePack *genePack::mutate() const {
 	float newHeight = this->height + (float)(randMath::getRand(-(RELATIVE_HEIGHT_MUTATION_SPEED*MUTATION_FACTOR),(RELATIVE_HEIGHT_MUTATION_SPEED*MUTATION_FACTOR)))/100.0;
 	if(newHeight < 0.0) newHeight = 0.0;
 	
-	float newWidth = this->width + (float)(randMath::getRand(-(RELATIVE_WIDTH_MUTATION_SPEED*MUTATION_FACTOR),(RELATIVE_WIDTH_MUTATION_SPEED*MUTATION_FACTOR)))/100;
+	float newWidth = this->width + (float)(randMath::getRand(-(RELATIVE_WIDTH_MUTATION_SPEED*MUTATION_FACTOR),(RELATIVE_WIDTH_MUTATION_SPEED*MUTATION_FACTOR)))/100.0;
 	if(newWidth < 0) newWidth = 0;
 	
 	return new genePack(newLifeTime,newNumSeeds,newSeedSpread,newGermChance,newHeight,newWidth);

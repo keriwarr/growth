@@ -2,98 +2,100 @@
 
 #include <iostream>
 
-canopy::canopy(int width, int height, pnode *first) : width(width), height(height), first(first) {}
+canopy::canopy(int width, int height, pnode *first) : width(width), height(height), length(0), first(first) {}
 
-canopy::~canopy() {delete first;}
-
-void canopy::insert(plant *p, int x, int y) {
-				std::cout << "ip1" << std::endl;
-
-	if(this->first == NULL) {
-				std::cout << "ip2" << std::endl;
+canopy::~canopy() {
+	
+	pnode *n = first;
+	while(n) {
 		
-		this->first = new pnode(p, x, y, NULL);
-				std::cout << "ip3" << std::endl;
-		
-	} else if(first->getPlant()->getGenePack()->getHeight() < p->getGenePack()->getHeight()) {
-				std::cout << "ip4" << std::endl;
-		
-		this->first = new pnode(p, x, y, first->getNext());
-				std::cout << "ip5" << std::endl;
-		
-	} else {
-				std::cout << "ip6" << std::endl;
-		
-		insertHelper(first, p, x, y);
-				std::cout << "ip7" << std::endl;
+		pnode *o = n->getNext();
+		delete n;
+		n = o;
 		
 	}
-				std::cout << "ip8" << std::endl;
+	
+}
+
+void canopy::insert(plant *p, int x, int y) {
+
+	if(this->first == NULL) {
+		
+		this->first = new pnode(p, x, y, NULL);
+		
+	} else if(first->getPlant()->getGenePack()->getHeight() < p->getGenePack()->getHeight()) {
+		
+		this->first = new pnode(p, x, y, first);
+		
+	} else {
+		
+		insertHelper(first, p, x, y);
+		
+	}
+	
+	length++;
 
 }
 
 void canopy::insertHelper(pnode *head, plant *p, int x, int y) {
-				std::cout << "ih1" << std::endl;
 	
 	if(head->getNext() == NULL) {
-				std::cout << "ih2" << std::endl;
 		
-		head->setNext(new pnode(p, x, y, NULL));
-				std::cout << "ih3" << std::endl;
+		pnode *n = new pnode(p, x, y, NULL);
+		head->setNext(n);
 		
 	} else if(head->getNext()->getPlant()->getGenePack()->getHeight() < p->getGenePack()->getHeight()) {
-				std::cout << "ih4" << std::endl;
 		
 		pnode *n = new pnode(p, x, y, head->getNext());
 		head->setNext(n);
-				std::cout << "ih5" << std::endl;
 		
 	} else {
-				std::cout << "ih6" << std::endl;
 		
 		insertHelper(head->getNext(), p, x, y);
-				std::cout << "ih7" << std::endl;
 		
 	}
-				std::cout << "ih8" << std::endl;
 	
 }
 
-bool canopy::remove(plant *p) {
+bool canopy::remove(int x, int y) {
 
 	if(first == NULL) {
 		
 		return false;
 		
-	} else if(first->getPlant() == p) {
+	} else if(first->getX() == x && first->getY() == y) {
 		
 		pnode *newFirst = first->getNext();
 		delete first;
 		first = newFirst;
+		return true;
+		length--;
 		
 	} else {
 	
-		return removeHelper(first, p);
+		return removeHelper(first, x, y);
 	
 	}	
 
 }
 
-bool canopy::removeHelper(pnode *head, plant *p) {
+bool canopy::removeHelper(pnode *head, int x, int y) {
 	
 	if(head->getNext() == NULL) {
 		
 		return false;
 		
-	} else if(head->getNext()->getPlant() == p) {
+	} else if(head->getNext()->getX() == x && head->getNext()->getY() == y) {
 		
 		pnode *replace = head->getNext()->getNext();
 		delete head->getNext();
 		head->setNext(replace);
+		return true;
+		length--;
 		
 	} else {
 		
-		return removeHelper(head->getNext(), p);
+		return removeHelper(head->getNext(), x, y);
 		
 	}
 	
@@ -116,6 +118,16 @@ void canopy::update() {
 	}
 	
 	updateHelper(sunLight, light, this->first);
+	
+	for(int i = 0; i < width; ++i) {
+		
+		delete [] sunLight[i];
+		sunLight[i] = NULL;
+		
+	}
+	
+	delete [] sunLight;
+	sunLight = NULL;
 
 }
 
@@ -164,5 +176,23 @@ void canopy::updateHelper(bool **sunLight, int light, pnode *head) {
 		updateHelper(sunLight, light, head->getNext());
 		
 	}	
+	
+}
+
+int canopy::getLength() {return this->length;}
+
+void canopy::printCanopy() {
+	
+	pnode *current = first;
+	
+	
+	while(current) {
+		
+		std::cout << "(" << current->getX() << "," << current->getY() << ")->";
+		current = current->getNext();
+		
+	}
+	
+	std::cout << "NULL" << std::endl;
 	
 }

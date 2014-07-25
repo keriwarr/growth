@@ -2,8 +2,6 @@
 
 pnode::pnode(plant *p, int x, int y, pnode *next) : p(p), x(x), y(y), next(next) {}
 
-pnode::~pnode() {delete next;}
-
 plant *pnode::getPlant() {return this->p;}
 
 int pnode::getX() const {return this->x;}

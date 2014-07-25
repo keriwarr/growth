@@ -2,7 +2,7 @@
 
 plant::plant(genePack *gp, int ID) : gp(gp), ID(ID), age(0), justCreated(true), light(0) {}
 
-plant::~plant() {delete gp;}
+plant::~plant() {delete gp; gp = NULL;}
 
 int plant::incrementAge() {
 	

@@ -30,6 +30,8 @@ grid::grid(int width, int height) : width(width), height(height), canop(new cano
 
 grid::~grid() {
 	
+	delete canop;
+	
 	for(int i = 0; i < width; ++i) {
 		
 		for(int j = 0; j < height; j++) {
@@ -47,7 +49,6 @@ grid::~grid() {
 	delete [] this->plants;
 	this->plants = NULL;
 	
-	delete canop;
 	
 }
 
@@ -65,10 +66,8 @@ void grid::addPlant(genePack *gp, int ID, int x, int y) {
 		totalWidth += plants[x][y]->getGenePack()->getWidth();
 		
 		this->numPlants++;
-				std::cout << "ap1" << std::endl;
 		
 		canop->insert(plants[x][y],x,y);
-				std::cout << "ap2" << std::endl;
 		
 	}
 	
@@ -82,8 +81,8 @@ void grid::removePlant(int x, int y) {
 	totalChance -= plants[x][y]->getGenePack()->getGermChance();
 	totalHeight -= plants[x][y]->getGenePack()->getHeight();
 	totalWidth -= plants[x][y]->getGenePack()->getWidth();
-	
-	canop->remove(plants[x][y]);
+
+	canop->remove(x, y);
 	delete plants[x][y];
 	plants[x][y] = NULL;
 	this->numPlants--;
@@ -126,24 +125,19 @@ void grid::tick() {
 					if(seeds[k]){
 						
 						if(seeds[k]->getX() == 0 && seeds[k]->getY() == 0) {sameSpace = true;}
-						this->addPlant(gp, ID, i + seeds[k]->getX(), j + seeds[k]->getY());
+						else this->addPlant(gp, ID, i + seeds[k]->getX(), j + seeds[k]->getY());
 						
 					}
 					
 					delete seeds[k];
 				}
 				
-				std::cout << "sf1" << std::endl;
 				
 				delete [] seeds;
-				std::cout << "sf2" << std::endl;
 				this->removePlant(i, j);
-				std::cout << "sf3" << std::endl;
 				if(sameSpace)this->addPlant(gp,ID,i,j);
-				std::cout << "sf4" << std::endl;
 				delete gp;
 				
-				std::cout << "sf5" << std::endl;
 				
 			}
 		}
@@ -204,6 +198,7 @@ void grid::listPlants(bool individuals, bool wholeGrid, bool averageStats) const
 	if(averageStats) {
 	
 		std::cout << "Number of plants: " << numPlants << std::endl;
+		std::cout << "plants in cnaopy: " << canop->getLength() << std::endl;
 		std::cout << "Average life time: " << totalLife / numPlants << std::endl;
 		std::cout << "Average number of seeds: " << totalNum / numPlants << std::endl;
 		std::cout << "Average spread distance: " << totalSpread / numPlants << std::endl;
