@@ -6,8 +6,10 @@ int genePack::RELATIVE_LIFETIME_MUTATION_SPEED;
 int genePack::RELATIVE_SEED_COUNT_MUTATION_SPEED;
 int genePack::RELATIVE_SEED_SPREAD_MUTATION_SPEED;
 int genePack::RELATIVE_GERMINATION_CHANCE_MUTATION_SPEED;
+int genePack::RELATIVE_HEIGHT_MUTATION_SPEED;
+int genePack::RELATIVE_WIDTH_MUTATION_SPEED;
 
-void genePack::setMutationFactors(int overall, int life, int seeds, int spread, int chance) {
+void genePack::setMutationFactors(int overall, int life, int seeds, int spread, int chance, int height, int width) {
 	
 	MUTATION_FACTOR = overall;
 	
@@ -15,20 +17,27 @@ void genePack::setMutationFactors(int overall, int life, int seeds, int spread, 
 	RELATIVE_SEED_COUNT_MUTATION_SPEED = seeds;
 	RELATIVE_SEED_SPREAD_MUTATION_SPEED = spread;
 	RELATIVE_GERMINATION_CHANCE_MUTATION_SPEED = chance;
+	RELATIVE_HEIGHT_MUTATION_SPEED = height;
+	RELATIVE_WIDTH_MUTATION_SPEED = width;
+	
 	
 }
 
-genePack::genePack(float lifeTime, float numSeeds, float seedSpread, float germChance) : lifeTime(lifeTime), numSeeds(numSeeds), seedSpread(seedSpread), germChance(germChance) {}
+genePack::genePack(float lifeTime, float numSeeds, float seedSpread, float germChance, float(height), int width) : lifeTime(lifeTime), numSeeds(numSeeds), seedSpread(seedSpread), germChance(germChance), height(height), width(width) {}
 
-float genePack::getLifeTime() {return this->lifeTime;}
+float genePack::getLifeTime() const {return this->lifeTime;}
 
-float genePack::getNumSeeds() {return this->numSeeds;}
+float genePack::getNumSeeds() const {return this->numSeeds;}
 
-float genePack::getSeedSpread() {return this->seedSpread;}
+float genePack::getSeedSpread() const {return this->seedSpread;}
 
-float genePack::getGermChance() {return this->germChance;}
+float genePack::getGermChance() const {return this->germChance;}
 
-genePack *genePack::mutate() {
+float genePack::getHeight() const {return this->height;}
+
+int genePack::getWidth() const {return this->width;}
+
+genePack *genePack::mutate() const {
 	
 	float newLifeTime = this->lifeTime + (float)(randMath::getRand(-(RELATIVE_LIFETIME_MUTATION_SPEED*MUTATION_FACTOR),(RELATIVE_LIFETIME_MUTATION_SPEED*MUTATION_FACTOR)))/100.0;
 	if(newLifeTime < 1.0) newLifeTime = 1.0;
@@ -43,6 +52,12 @@ genePack *genePack::mutate() {
 	if(newGermChance < 0.0) newGermChance = 0.0;
 	else if(newGermChance > 100.0) newGermChance = 100.0;
 	
-	return new genePack(newLifeTime,newNumSeeds,newSeedSpread,newGermChance);
+	float newHeight = this->height + (float)(randMath::getRand(-(RELATIVE_HEIGHT_MUTATION_SPEED*MUTATION_FACTOR),(RELATIVE_HEIGHT_MUTATION_SPEED*MUTATION_FACTOR)))/100.0;
+	if(newHeight < 0.0) newHeight = 0.0;
+	
+	int newWidth = this->width + (randMath::getRand(-(RELATIVE_WIDTH_MUTATION_SPEED*MUTATION_FACTOR),(RELATIVE_WIDTH_MUTATION_SPEED*MUTATION_FACTOR)))/100;
+	if(newWidth < 0) newWidth = 0;
+	
+	return new genePack(newLifeTime,newNumSeeds,newSeedSpread,newGermChance,newHeight,newWidth);
 	
 }

@@ -14,13 +14,13 @@ class randMath {
 		static void seedRand();
 
 		// generates an integer in between bot and top, inclusive
-		static int getRand(int bot, int top);
+		static int getRand(const int bot, const int top);
 
 		// returns a seedDrop object with x & y within radius:range of the 
 		// origin plant
 		//
 		// Note!! caller must delete returned seedDrop
-		static vector *getDrop(float range);
+		static vector *getDrop(const float range);
 	
 };
 

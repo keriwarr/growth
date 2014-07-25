@@ -10,37 +10,48 @@ class genePack {
 		static int RELATIVE_SEED_COUNT_MUTATION_SPEED;
 		static int RELATIVE_SEED_SPREAD_MUTATION_SPEED;
 		static int RELATIVE_GERMINATION_CHANCE_MUTATION_SPEED;
+		static int RELATIVE_HEIGHT_MUTATION_SPEED;
+		static int RELATIVE_WIDTH_MUTATION_SPEED;
 
 		// the values govern respectively:
 		//		-the duration of the plants life
 		//		-the number of seeds the plant will produce
 		// 		-the distance which the seeds can spread
 		//		-the chance that a seed will form a new plant
-		float lifeTime, numSeeds, seedSpread, germChance;
+		float lifeTime, numSeeds, seedSpread, germChance, height;
+		
+		//
+		int width;
 
 	public:
 	
 		// sets the rate at which mutations occur
 		// overall affects the mutation rate of all categories
-		static void setMutationFactors(int overall, int life, int seeds, int spread, int chance);
+		static void setMutationFactors(int overall, int life, int seeds, int spread, int chance, int height, int width);
 	
 		// initializes using the given values
-		genePack(float lifeTime, float numSeeds, float seedSpread, float germChance);
+		genePack(float lifeTime, float numSeeds, float seedSpread, float germChance, float height, int width);
 			
 		// returns lifeTime
-		float getLifeTime();
+		float getLifeTime() const;
 		
 		// returns numSeeds
-		float getNumSeeds();
+		float getNumSeeds() const;
 		
 		// returns seedSpread
-		float getSeedSpread();
+		float getSeedSpread() const;
 		
 		// returns germChance
-		float getGermChance();
+		float getGermChance() const;
+		
+		//
+		float getHeight() const;
+		
+		//
+		int getWidth() const;
 	
 		// returns a new genePack which much be deleted by the caller
-		genePack *mutate();
+		genePack *mutate() const;
 		
 };
 

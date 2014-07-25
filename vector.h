@@ -3,8 +3,6 @@
 
 class vector {
 	
-		// co-ordinates for where a new seed drops relative to its 
-		// parent plant
 		int x, y;
 	
 	public:
@@ -12,10 +10,10 @@ class vector {
 		vector(int x, int y);
 		
 		// returns x
-		int getX();
+		int getX() const;
 		
 		// returns y
-		int getY();
+		int getY() const;
 	
 };
 

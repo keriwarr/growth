@@ -2,6 +2,6 @@
 
 vector::vector(int x, int y) : x(x), y(y) {}
 		
-int vector::getX() {return this->x;}
+int vector::getX() const {return this->x;}
 		
-int vector::getY() {return this->y;}
+int vector::getY() const {return this->y;}

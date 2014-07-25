@@ -1,23 +1,23 @@
 #ifndef __grid_H__
 #define __grid_H__
-#include "tile.h"
 #include "plant.h"
 #include "genepack.h"
 #include "vector.h" 
 #include <iostream>
 
 class grid {
-	
-		// 2D array of pointers to tile objects
-		tile ***tiles;
 		
 		// 2D array of pointers to plant objects
 		plant ***plants;
 		
+		//
+		canopy *canop;
+		
 		int width, height, numPlants;	
 		
 		// sum of characteristics of all plants on the grid
-		float totalLife, totalNum, totalSpread, totalChance;
+		float totalLife, totalNum, totalSpread, totalChance, totalHeight;
+		int totalWidth;
 		
 	public:	
 	
@@ -51,11 +51,11 @@ class grid {
 		// if (individuals) prints stats for each plant on the grid
 		// if (wholeGrid) prints a ASCII representation of the grid
 		// if (averageStats) prints average stats of all the plants
-		void listPlants (bool individuals, bool wholeGrid, bool averageStats);		
+		void listPlants (bool individuals, bool wholeGrid, bool averageStats) const;		
 		
 		// prints the current averages of all of the stats for all the 
 		// plants currently on the grid, separated by commas
-		void printCSV ();
+		void printCSV () const;
 	
 };
 

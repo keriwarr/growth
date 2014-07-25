@@ -23,7 +23,10 @@ class plant {
 		// an ID which is unique to a plants genetic tree
 		int ID;
 		
+		
 	public:
+	
+		int light;
 	
 		// defaults age to 0 and justCreated to true
 		plant(genePack *gp, int ID);
@@ -35,22 +38,25 @@ class plant {
 		int incrementAge();
 		
 		// returns gp
-		genePack *getGenePack();
+		genePack *getGenePack() const;
 		
 		//	returns age
-		int getAge();	
+		int getAge() const;	
 		
 		// returns ID
-		int getID();
+		int getID() const;
 		
 		// returns justCreated
-		bool isJustCreated();
+		bool isJustCreated() const;
 		
 		// sets justCreated to false
 		void notJustCreated();
 		
+		//
+		void setLight(int l);
+		
 		// prints a description of the current state of the plant
-		void printPlant ();
+		void printPlant () const;
 		
 		// generates an array of seedDrops with each one corresponding 
 		// to a seed from this plant which germinates at the given x & y
@@ -59,7 +65,7 @@ class plant {
 		// a seed germinating approaches zero
 		//
 		// Note!! caller must delete the returned array
-		vector **spewSeeds(float crowdedness);
+		vector **spewSeeds(float crowdedness) const;
 		
 };
 

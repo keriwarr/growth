@@ -15,23 +15,25 @@ int plant::incrementAge() {
 	
 }
 
-genePack *plant::getGenePack() {return this->gp;}
+genePack *plant::getGenePack() const {return this->gp;}
 
-int plant::getAge() {return this->age;}
+int plant::getAge() const {return this->age;}
 
-int plant::getID() {return this->ID;}
+int plant::getID() const {return this->ID;}
 
-bool plant::isJustCreated() {return this->justCreated;}
+bool plant::isJustCreated() const {return this->justCreated;}
 
 void plant::notJustCreated() {this->justCreated = false;}
 
-void plant::printPlant() {
+void plant::setLight(int l) {this->light = l;}
+
+void plant::printPlant() const {
 	
 	std::cout << "lifeTime: " << this->gp->getLifeTime() << " | numSeeds: " << this->gp->getNumSeeds() << " | seedSpread: " << this->gp->getSeedSpread() << " | germChance: " << this->gp->getGermChance() << " | age: " << this->age << std::endl;
 	
 }
 
-vector **plant::spewSeeds(float crowdedness) {
+vector **plant::spewSeeds(float crowdedness) const {
 		
 	vector **seeds = new vector*[(int)this->gp->getNumSeeds()];
 	
