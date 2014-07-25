@@ -1,11 +1,6 @@
 #include "plant.h"
 
-plant::plant(genePack *gp, int ID) : gp(gp), ID(ID) {
-	
-	this->age = 0;
-	this->justCreated = true;
-	
-}
+plant::plant(genePack *gp, int ID) : gp(gp), ID(ID), age(0), justCreated(true), light(0) {}
 
 plant::~plant() {delete gp;}
 
@@ -29,7 +24,7 @@ void plant::setLight(int l) {this->light = l;}
 
 void plant::printPlant() const {
 	
-	std::cout << "lifeTime: " << this->gp->getLifeTime() << " | numSeeds: " << this->gp->getNumSeeds() << " | seedSpread: " << this->gp->getSeedSpread() << " | germChance: " << this->gp->getGermChance() << " | age: " << this->age << std::endl;
+	std::cout << " | lifeTime: " << this->gp->getLifeTime() << " | numSeeds: " << this->gp->getNumSeeds() << " | seedSpread: " << this->gp->getSeedSpread() << " | germChance: " << this->gp->getGermChance() << " | age: " << this->age << " | height: " << this->gp->getHeight() << " | width: " << this->gp->getWidth() << " | light: " << this->light << std::endl;
 	
 }
 

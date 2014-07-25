@@ -11,7 +11,7 @@ grid *grid::getInstance(int x, int y) {
 	
 }
 
-grid::grid(int width, int height) : width(width), height(height), canop(new Canopy(width, height, NULL)), numPlants(0), totalLife(0.0), totalNum(0.0), totalSpread(0.0), totalChance(0.0), totalHeight(0.0), totalWidth(0) {
+grid::grid(int width, int height) : width(width), height(height), canop(new canopy(width, height, NULL)), numPlants(0), totalLife(0.0), totalNum(0.0), totalSpread(0.0), totalChance(0.0), totalHeight(0.0), totalWidth(0) {
 	
 	this->plants = new plant**[width];
 	
@@ -65,8 +65,10 @@ void grid::addPlant(genePack *gp, int ID, int x, int y) {
 		totalWidth += plants[x][y]->getGenePack()->getWidth();
 		
 		this->numPlants++;
+				std::cout << "ap1" << std::endl;
 		
 		canop->insert(plants[x][y],x,y);
+				std::cout << "ap2" << std::endl;
 		
 	}
 	
@@ -115,7 +117,7 @@ void grid::tick() {
 				crowdedness *= 5.0/2.0;
 				
 				vector **seeds = plants[i][j]->spewSeeds(crowdedness);
-				genePack *gp = new genePack(plants[i][j]->getGenePack()->getLifeTime(),plants[i][j]->getGenePack()->getNumSeeds(),plants[i][j]->getGenePack()->getSeedSpread(),plants[i][j]->getGenePack()->getGermChance());
+				genePack *gp = new genePack(plants[i][j]->getGenePack()->getLifeTime(),plants[i][j]->getGenePack()->getNumSeeds(),plants[i][j]->getGenePack()->getSeedSpread(),plants[i][j]->getGenePack()->getGermChance(),plants[i][j]->getGenePack()->getHeight(),plants[i][j]->getGenePack()->getWidth());
 				int ID = plants[i][j]->getID();
 				bool sameSpace = false;
 				
@@ -131,10 +133,17 @@ void grid::tick() {
 					delete seeds[k];
 				}
 				
+				std::cout << "sf1" << std::endl;
+				
 				delete [] seeds;
+				std::cout << "sf2" << std::endl;
 				this->removePlant(i, j);
+				std::cout << "sf3" << std::endl;
 				if(sameSpace)this->addPlant(gp,ID,i,j);
+				std::cout << "sf4" << std::endl;
 				delete gp;
+				
+				std::cout << "sf5" << std::endl;
 				
 			}
 		}
@@ -153,6 +162,8 @@ void grid::tick() {
 		}
 	}
 	
+	canop->update();
+	
 }
 
 void grid::listPlants(bool individuals, bool wholeGrid, bool averageStats) const {
@@ -165,7 +176,8 @@ void grid::listPlants(bool individuals, bool wholeGrid, bool averageStats) const
 				
 				if(plants[i][j]) {
 					
-					std::cout << "--------------------------------------------------------------" << std::endl;
+					std::cout << "---------------------------------------------------------------------------------------------------------------------------" << std::endl;
+					std::cout << "x: " << i << " | y: " << j;
 					plants[i][j]->printPlant();
 					
 				}
@@ -197,12 +209,12 @@ void grid::listPlants(bool individuals, bool wholeGrid, bool averageStats) const
 		std::cout << "Average spread distance: " << totalSpread / numPlants << std::endl;
 		std::cout << "Average germination chance: " << totalChance / numPlants << std::endl;
 		std::cout << "Average height: " << totalHeight / numPlants << std::endl;
-		atd::cout << "Average width: " << (float)totalWidth / numPlants << std::endl;
+		std::cout << "Average width: " << totalWidth / numPlants << std::endl;
 		
 	}
 	
 }
 
 void grid::printCSV() const {
-	std::cout << totalLife / numPlants << "," << totalNum / numPlants << "," << totalSpread / numPlants << "," << totalChance / numPlants << "," << totalHeight / numPlants << "," << (float)totalWidth / numPlants << "," << std::endl;
+	std::cout << totalLife / numPlants << "," << totalNum / numPlants << "," << totalSpread / numPlants << "," << totalChance / numPlants << "," << totalHeight / numPlants << "," << totalWidth / numPlants << "," << std::endl;
 }

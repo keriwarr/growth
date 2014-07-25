@@ -33,8 +33,8 @@ int main(int argc, char *argv[]) {
 	
 	randMath::seedRand();
 	grid *theGrid = grid::getInstance(gridX,gridY);
-	genePack::setMutationFactors(20,2,2,2,10);
-	theGrid->addPlant(new genePack(life,num,spread,chance),1,gridX/2,gridY/2);
+	genePack::setMutationFactors(20,2,2,2,10,2,2);
+	theGrid->addPlant(new genePack(life,num,spread,chance,4,1),1,gridX/2,gridY/2);
 	/*theGrid->addPlant(new genePack(life,num,spread,chance),2,3*gridX/4,3*gridY/4);*/
 	theGrid->tick();
 	
@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
 		int iter = 0;
 		while(c != 'q') {
 			
-			theGrid->listPlants(0,1,1);
+			theGrid->listPlants(1,1,1);
 			std::cout << "Iterations: " << iter << std::endl;
 			std::cin >> c; 
 			if(c == 't') {

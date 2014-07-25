@@ -3,6 +3,7 @@
 #include "plant.h"
 #include "genepack.h"
 #include "vector.h" 
+#include "canopy.h"
 #include <iostream>
 
 class grid {
@@ -16,8 +17,7 @@ class grid {
 		int width, height, numPlants;	
 		
 		// sum of characteristics of all plants on the grid
-		float totalLife, totalNum, totalSpread, totalChance, totalHeight;
-		int totalWidth;
+		float totalLife, totalNum, totalSpread, totalChance, totalHeight, totalWidth;
 		
 	public:	
 	

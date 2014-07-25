@@ -16,13 +16,11 @@ class canopy {
 		
 	public:
 	
-		canopy(int width, int height, plant *first);
+		canopy(int width, int height, pnode *first);
 		
 		~canopy();
 	
 		void insert(plant *p, int x, int y);
-		
-		void insertHelper(pnode *head, plant *p, int x, int y);
 		
 		// returns true if successful
 		// caller must delete plant *p elsewhere

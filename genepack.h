@@ -18,10 +18,7 @@ class genePack {
 		//		-the number of seeds the plant will produce
 		// 		-the distance which the seeds can spread
 		//		-the chance that a seed will form a new plant
-		float lifeTime, numSeeds, seedSpread, germChance, height;
-		
-		//
-		int width;
+		float lifeTime, numSeeds, seedSpread, germChance, height, width;
 
 	public:
 	
@@ -30,7 +27,7 @@ class genePack {
 		static void setMutationFactors(int overall, int life, int seeds, int spread, int chance, int height, int width);
 	
 		// initializes using the given values
-		genePack(float lifeTime, float numSeeds, float seedSpread, float germChance, float height, int width);
+		genePack(float lifeTime, float numSeeds, float seedSpread, float germChance, float height, float width);
 			
 		// returns lifeTime
 		float getLifeTime() const;
@@ -48,7 +45,7 @@ class genePack {
 		float getHeight() const;
 		
 		//
-		int getWidth() const;
+		float getWidth() const;
 	
 		// returns a new genePack which much be deleted by the caller
 		genePack *mutate() const;

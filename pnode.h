@@ -17,9 +17,9 @@ class pnode {
 		
 		plant *getPlant();
 		
-		int getX();
+		int getX() const;
 		
-		int getY();
+		int getY() const;
 		
 		pnode *getNext();
 		

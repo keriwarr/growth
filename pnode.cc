@@ -1,4 +1,4 @@
-#inclide "pnode.h"
+#include "pnode.h"
 
 pnode::pnode(plant *p, int x, int y, pnode *next) : p(p), x(x), y(y), next(next) {}
 

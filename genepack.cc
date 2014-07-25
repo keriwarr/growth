@@ -23,7 +23,7 @@ void genePack::setMutationFactors(int overall, int life, int seeds, int spread, 
 	
 }
 
-genePack::genePack(float lifeTime, float numSeeds, float seedSpread, float germChance, float(height), int width) : lifeTime(lifeTime), numSeeds(numSeeds), seedSpread(seedSpread), germChance(germChance), height(height), width(width) {}
+genePack::genePack(float lifeTime, float numSeeds, float seedSpread, float germChance, float(height), float width) : lifeTime(lifeTime), numSeeds(numSeeds), seedSpread(seedSpread), germChance(germChance), height(height), width(width) {}
 
 float genePack::getLifeTime() const {return this->lifeTime;}
 
@@ -35,7 +35,7 @@ float genePack::getGermChance() const {return this->germChance;}
 
 float genePack::getHeight() const {return this->height;}
 
-int genePack::getWidth() const {return this->width;}
+float genePack::getWidth() const {return this->width;}
 
 genePack *genePack::mutate() const {
 	
@@ -55,7 +55,7 @@ genePack *genePack::mutate() const {
 	float newHeight = this->height + (float)(randMath::getRand(-(RELATIVE_HEIGHT_MUTATION_SPEED*MUTATION_FACTOR),(RELATIVE_HEIGHT_MUTATION_SPEED*MUTATION_FACTOR)))/100.0;
 	if(newHeight < 0.0) newHeight = 0.0;
 	
-	int newWidth = this->width + (randMath::getRand(-(RELATIVE_WIDTH_MUTATION_SPEED*MUTATION_FACTOR),(RELATIVE_WIDTH_MUTATION_SPEED*MUTATION_FACTOR)))/100;
+	float newWidth = this->width + (float)(randMath::getRand(-(RELATIVE_WIDTH_MUTATION_SPEED*MUTATION_FACTOR),(RELATIVE_WIDTH_MUTATION_SPEED*MUTATION_FACTOR)))/100;
 	if(newWidth < 0) newWidth = 0;
 	
 	return new genePack(newLifeTime,newNumSeeds,newSeedSpread,newGermChance,newHeight,newWidth);
