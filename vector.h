@@ -3,10 +3,12 @@
 
 class vector {
 	
+		// co-ordinates
 		int x, y;
 	
 	public:
 	
+		// constructor
 		vector(int x, int y);
 		
 		// returns x

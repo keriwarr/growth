@@ -18,6 +18,9 @@ class genePack {
 		//		-the number of seeds the plant will produce
 		// 		-the distance which the seeds can spread
 		//		-the chance that a seed will form a new plant
+		//		-height
+		//		-width of the plants leaf canopy.
+		//		  a plant has a square canopy of area (2*(int)width+1)^2
 		float lifeTime, numSeeds, seedSpread, germChance, height, width;
 
 	public:
@@ -41,10 +44,10 @@ class genePack {
 		// returns germChance
 		float getGermChance() const;
 		
-		//
+		// returns height
 		float getHeight() const;
 		
-		//
+		// returns width
 		float getWidth() const;
 	
 		// returns a new genePack which much be deleted by the caller

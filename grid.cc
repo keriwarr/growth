@@ -52,7 +52,7 @@ grid::~grid() {
 	
 }
 
-void grid::addPlant(genePack *gp, int ID, int x, int y) {
+void grid::addPlant(genePack const *gp, int ID, int x, int y) {
 	
 	if(x >= 0 && y >= 0 && x < width && y < height && !plants[x][y]) {
 		
@@ -97,25 +97,7 @@ void grid::tick() {
 			
 			if(plants[i][j] && !plants[i][j]->isJustCreated() && plants[i][j]->incrementAge() >= (int)plants[i][j]->getGenePack()->getLifeTime()) {
 				
-				float crowdedness = 0;
-				
-				for(int h = -2; h < 3; h++) {
-					
-					for(int k = -2; k < 3; k++) {
-						
-						if((h+i) < 0 || (h+i) >= width || (k+j) < 0 || (k+j) >= height || plants[h+i][k+j]) {
-							if(h == 0 && k == 0) crowdedness += 0.0;
-							else if(h >= -1 && h <= 1 && k >= -1 && k <= 1) crowdedness += 3.0;
-							else crowdedness += 1.0;
-						}
-						
-					}
-					
-				}
-				
-				crowdedness *= 5.0/2.0;
-				
-				vector **seeds = plants[i][j]->spewSeeds(crowdedness);
+				vector **seeds = plants[i][j]->spewSeeds();
 				genePack *gp = new genePack(plants[i][j]->getGenePack()->getLifeTime(),plants[i][j]->getGenePack()->getNumSeeds(),plants[i][j]->getGenePack()->getSeedSpread(),plants[i][j]->getGenePack()->getGermChance(),plants[i][j]->getGenePack()->getHeight(),plants[i][j]->getGenePack()->getWidth());
 				int ID = plants[i][j]->getID();
 				bool sameSpace = false;
@@ -198,7 +180,6 @@ void grid::listPlants(bool individuals, bool wholeGrid, bool averageStats) const
 	if(averageStats) {
 	
 		std::cout << "Number of plants: " << numPlants << std::endl;
-		std::cout << "plants in cnaopy: " << canop->getLength() << std::endl;
 		std::cout << "Average life time: " << totalLife / numPlants << std::endl;
 		std::cout << "Average number of seeds: " << totalNum / numPlants << std::endl;
 		std::cout << "Average spread distance: " << totalSpread / numPlants << std::endl;
@@ -211,5 +192,5 @@ void grid::listPlants(bool individuals, bool wholeGrid, bool averageStats) const
 }
 
 void grid::printCSV() const {
-	std::cout << totalLife / numPlants << "," << totalNum / numPlants << "," << totalSpread / numPlants << "," << totalChance / numPlants << "," << totalHeight / numPlants << "," << totalWidth / numPlants << "," << std::endl;
+	std::cout << numPlants << "," << totalLife / numPlants << "," << totalNum / numPlants << "," << totalSpread / numPlants << "," << totalChance / numPlants << "," << totalHeight / numPlants << "," << totalWidth / numPlants << "," << std::endl;
 }

@@ -4,12 +4,14 @@
 
 int main(int argc, char *argv[]) {
 	
-	int gridX = 10;
-	int gridY = 10;
-	float life = 20;
-	float num = 4;
-	float spread = 2;
+	int gridX = 30;
+	int gridY = 30;
+	float life = 10;
+	float num = 8;
+	float spread = 3;
 	float chance = 70;
+	float height = 4;
+	float width = 1;
 	char c;
 	
 	int CSV_ITERATIONS = 1000;
@@ -34,7 +36,7 @@ int main(int argc, char *argv[]) {
 	randMath::seedRand();
 	grid *theGrid = grid::getInstance(gridX,gridY);
 	genePack::setMutationFactors(20,2,2,2,10,2,2);
-	genePack *gp = new genePack(life,num,spread,chance,4,1);
+	genePack *gp = new genePack(life,num,spread,chance,height,width);
 	theGrid->addPlant(gp,1,gridX/2,gridY/2);
 	delete gp;
 	/*theGrid->addPlant(new genePack(life,num,spread,chance),2,3*gridX/4,3*gridY/4);*/
@@ -44,7 +46,7 @@ int main(int argc, char *argv[]) {
 		
 		for(int i = 0; i < CSV_ITERATIONS; i++) {
 			
-			if(i%5000==0)theGrid->printCSV();
+			/*if(i%5000==0)*/theGrid->printCSV();
 			theGrid->tick();
 			
 		}

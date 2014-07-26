@@ -37,7 +37,7 @@ class grid {
 		
 		// creates a plant object with the given gene pack, at the
 		// given location, and occupies the corresponding tile
-		void addPlant (genePack *gp, int ID, int x, int y);
+		void addPlant (genePack const *gp, int ID, int x, int y);
 		
 		// deletes a plant object at the given location and de-occupies
 		// the tile

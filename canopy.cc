@@ -1,8 +1,6 @@
 #include "canopy.h"
 
-#include <iostream>
-
-canopy::canopy(int width, int height, pnode *first) : width(width), height(height), length(0), first(first) {}
+canopy::canopy(int width, int height, pnode *first) : width(width), height(height), first(first) {}
 
 canopy::~canopy() {
 	
@@ -33,8 +31,6 @@ void canopy::insert(plant *p, int x, int y) {
 		
 	}
 	
-	length++;
-
 }
 
 void canopy::insertHelper(pnode *head, plant *p, int x, int y) {
@@ -69,7 +65,6 @@ bool canopy::remove(int x, int y) {
 		delete first;
 		first = newFirst;
 		return true;
-		length--;
 		
 	} else {
 	
@@ -91,7 +86,6 @@ bool canopy::removeHelper(pnode *head, int x, int y) {
 		delete head->getNext();
 		head->setNext(replace);
 		return true;
-		length--;
 		
 	} else {
 		
@@ -101,7 +95,7 @@ bool canopy::removeHelper(pnode *head, int x, int y) {
 	
 }
 
-void canopy::update() {
+int canopy::update() const {
 
 	int light = width*height;
 	bool **sunLight = new bool*[this->width];
@@ -128,10 +122,12 @@ void canopy::update() {
 	
 	delete [] sunLight;
 	sunLight = NULL;
+	
+	return light;
 
 }
 
-void canopy::updateHelper(bool **sunLight, int light, pnode *head) {
+void canopy::updateHelper(bool **sunLight, int light, pnode *head) const {
 
 	if(head) {
 		
@@ -176,23 +172,5 @@ void canopy::updateHelper(bool **sunLight, int light, pnode *head) {
 		updateHelper(sunLight, light, head->getNext());
 		
 	}	
-	
-}
-
-int canopy::getLength() {return this->length;}
-
-void canopy::printCanopy() {
-	
-	pnode *current = first;
-	
-	
-	while(current) {
-		
-		std::cout << "(" << current->getX() << "," << current->getY() << ")->";
-		current = current->getNext();
-		
-	}
-	
-	std::cout << "NULL" << std::endl;
 	
 }

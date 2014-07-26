@@ -20,13 +20,13 @@ class plant {
 		// are created
 		bool justCreated;
 		
-		// an ID which is unique to a plants genetic tree
+		// an ID which is unique to a plants genetic ancestral tree
 		int ID;
 		
+		// the current amount of sunlight whihc this plant is receiveing
+		int light;
 		
 	public:
-	
-		int light;
 	
 		// defaults age to 0 and justCreated to true
 		plant(genePack *gp, int ID);
@@ -59,13 +59,11 @@ class plant {
 		void printPlant () const;
 		
 		// generates an array of seedDrops with each one corresponding 
-		// to a seed from this plant which germinates at the given x & y
+		//  to a seed from this plant which germinates at the given x & y
 		//
-		// as crowdedness approaches the germination chance, the odds of
-		// a seed germinating approaches zero
-		//
-		// Note!! caller must delete the returned array
-		vector **spewSeeds(float crowdedness) const;
+		// Note!! caller must delete the returned array and each of its
+		//  elements
+		vector **spewSeeds() const;
 		
 };
 
