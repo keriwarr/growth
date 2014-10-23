@@ -1,18 +1,14 @@
 Growth
 ======
 
-A little OOP C++ project I am working on. 
-The end goal is to produce an environment in which plants will randomly mutate
-and compete for resources, so that superior forms will naturally 
-evolve over time.
+The objective of this project is to produce an environment in which simulated entities will randomly mutate according to a sort of genetic algorith, and compete for resources, to result in a natural emerge of unique non-trivial, non-obvious forms of entities.
 
-This is also something of an adventure in to the lands of object-orineted programming and, where I learn how to write C++ with good style.
+The program is entirely text-based as for now.
 
-note: "./generateData (int n)" can be exectued to pipe data from main concerning average plant statistics in an environment iterated n times into a LibreOffice Calc spreadsheet. The data can easy be then graphed using the chart button.
+Usage
+-----
 
-The program is entirely text-based at the moment.
+* `make`
+* `./main [# of generations (100-10,000)]`
 
-In order to compile, run make and execute main 
-
-
-Organic Life Simulation Evironment
+Note: `./generateData [# of generations (100-10,000)]` can be exectued to pipe data from main concerning average plant statistics into a LibreOffice Calc spreadsheet. The data can easy be then graphed and visualized using the chart button.
