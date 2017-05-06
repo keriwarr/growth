@@ -1,0 +1,33 @@
+{
+  "name": "growth",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "npm run start",
+    "dev": "babel -o run.js -w -s true index.js & nodemon -w run.js --delay 2 run.js",
+    "build": "babel -o run.js index.js",
+    "run": "node run.js",
+    "start": "npm run build && npm run run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KeriWarr/growth.git"
+  },
+  "author": "Keri Warr",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KeriWarr/growth/issues"
+  },
+  "homepage": "https://github.com/KeriWarr/growth#readme",
+  "dependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-env": "^1.0.2",
+    "ramda": "^0.22.1"
+  },
+  "devDependencies": {
+    "eslint": "^3.12.0",
+    "eslint-config-airbnb-base": "^10.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "nodemon": "^1.11.0"
+  }
+}
